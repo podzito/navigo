@@ -318,7 +318,7 @@ describe("Given the Navigo library", () => {
       querySelectorAll.mockImplementation(() => [link]);
 
       const r: NavigoRouter = new Navigo("/app");
-      r.updatePageLinks();
+      r.updatePageLinks({ removeExisting: false });
 
       expect(addEventListener).toBeCalledTimes(1);
       expect(removeEventListener).toBeCalledTimes(1);

@@ -5,7 +5,7 @@ A simple minimalistic JavaScript router with a fallback for older browsers.
 ![Travis](https://travis-ci.org/krasimir/navigo.svg?branch=master)
 [![npm downloads](https://img.shields.io/npm/dm/navigo.svg?style=flat-square)](https://www.npmjs.com/package/navigo)
 
-*([Demo source files](./demo))*
+_([Demo source files](./demo))_
 
 ---
 
@@ -15,7 +15,7 @@ Drop the following into your page:
 
 ```html
 <script src="//unpkg.com/navigo@6"></script>
-``` 
+```
 
 or use via npm:
 
@@ -30,7 +30,7 @@ npm install navigo --save
 ```js
 var root = null;
 var useHash = true; // Defaults to: false
-var hash = '#!'; // Defaults to: '#'
+var hash = "#!"; // Defaults to: '#'
 var router = new Navigo(root, useHash, hash);
 ```
 
@@ -44,7 +44,7 @@ to this mode if there is no History API supported. The `hash` parameter allows y
 
 ```js
 router
-  .on('/products/list', function () {
+  .on("/products/list", function () {
     // display all the products
   })
   .resolve();
@@ -65,26 +65,26 @@ router
 ```js
 router
   .on({
-    'products/:id': function () {
-      setContent('Products');
+    "products/:id": function () {
+      setContent("Products");
     },
-    'products': function () {
-      setContent('About');
+    products: function () {
+      setContent("About");
     },
-    '*': function () {
-      setContent('Home')
-    }
+    "*": function () {
+      setContent("Home");
+    },
   })
   .resolve();
 ```
 
-*Have in mind that the order of the added routes using this method [does not](https://github.com/krasimir/navigo/pull/39) matter anymore. However, if we add series of routes by calling `on` multiple times we should consider the order of the calls.*
+_Have in mind that the order of the added routes using this method [does not](https://github.com/krasimir/navigo/pull/39) matter anymore. However, if we add series of routes by calling `on` multiple times we should consider the order of the calls._
 
 ### Parameterized URLs:
 
 ```js
 router
-  .on('/user/:id/:action', function (params) {
+  .on("/user/:id/:action", function (params) {
     // If we have http://site.com/user/42/save as a url then
     // params.id = 42
     // params.action = save
@@ -98,7 +98,7 @@ Every handler receives the GET parameters passed to the page.
 
 ```js
 router
-  .on('/user/:id/:action', function (params, query) {
+  .on("/user/:id/:action", function (params, query) {
     // If we have http://site.com/user/42/save?answer=42 as a url then
     // params.id = 42
     // params.action = save
@@ -108,6 +108,7 @@ router
 ```
 
 In the case of the default handler and `notFound` handler the function receives only `query` as parameter. For example:
+
 ```js
 router.notFound(function (query) {
   // ...
@@ -130,14 +131,14 @@ Wild card is also supported:
 
 ```js
 router
-  .on('/user/*', function () {
+  .on("/user/*", function () {
     // This function will be called on every
     // URL that starts with /user
   })
   .resolve();
 ```
 
-*Have in mind that every call of `on` do not trigger a route check (anymore). You have to run `resolve` method manually to get the routing works.*
+_Have in mind that every call of `on` do not trigger a route check (anymore). You have to run `resolve` method manually to get the routing works._
 
 ### Not-found handler
 
@@ -153,13 +154,13 @@ router.notFound(function () {
 Use the `navigate` method:
 
 ```js
-router.navigate('/products/list');
+router.navigate("/products/list");
 ```
 
 You may also specify an absolute path. For example:
 
 ```js
-router.navigate('http://site.com/products/list', true);
+router.navigate("http://site.com/products/list", true);
 ```
 
 If you want to bind page links to Navigo you have to add `data-navigo` attribute. For example:
@@ -168,7 +169,7 @@ If you want to bind page links to Navigo you have to add `data-navigo` attribute
 <a href="about" data-navigo>About</a>
 ```
 
-*(Have in mind that you have to fire `updatePageLinks` every time when new links are placed on the page so Navigo does the binding for them.)*
+_(Have in mind that you have to fire `updatePageLinks` every time when new links are placed on the page so Navigo does the binding for them.)_
 
 It's translated to:
 
@@ -187,24 +188,24 @@ link.addEventListener('click', e => {
 Use the following API to give a name to your route and later generate URLs:
 
 ```js
-router = new Navigo('http://site.com/', true);
+router = new Navigo("http://site.com/", true);
 router.on({
-  '/trip/:tripId/edit': { as: 'trip.edit', uses: handler },
-  '/trip/save': { as: 'trip.save', uses: handler },
-  '/trip/:action/:tripId': { as: 'trip.action', uses: handler }
+  "/trip/:tripId/edit": { as: "trip.edit", uses: handler },
+  "/trip/save": { as: "trip.save", uses: handler },
+  "/trip/:action/:tripId": { as: "trip.action", uses: handler },
 });
-console.log(router.generate('trip.edit', { tripId: 42 })); // --> /trip/42/edit
-console.log(router.generate('trip.action', { tripId: 42, action: 'save' })); // --> /trip/save/42
-console.log(router.generate('trip.save')); // --> /trip/save
+console.log(router.generate("trip.edit", { tripId: 42 })); // --> /trip/42/edit
+console.log(router.generate("trip.action", { tripId: 42, action: "save" })); // --> /trip/save/42
+console.log(router.generate("trip.save")); // --> /trip/save
 ```
 
 ### Resolving the routes
 
 The resolving of the routes happen when `resolve` method is fired which happen:
 
-* if you manually run `router.resolve()`
-* every time when the page's URL changes
-* if you call `navigate`
+- if you manually run `router.resolve()`
+- every time when the page's URL changes
+- if you call `navigate`
 
 ### Pausing the router
 
@@ -212,7 +213,7 @@ The resolving of the routes happen when `resolve` method is fired which happen:
 
 ```js
 router.pause();
-router.navigate('/en/products');
+router.navigate("/en/products");
 router.resume(); // or .pause(false)
 ```
 
@@ -231,11 +232,11 @@ There is an API that allows you to run functions before firing a route handler. 
 }
 ```
 
-You may specify only one of the hooks. The `before` hook accepts a function which you *must* invoke once you finish your job. Here is an examples:
+You may specify only one of the hooks. The `before` hook accepts a function which you _must_ invoke once you finish your job. Here is an examples:
 
 ```js
 router.on(
-  '/user/edit',
+  "/user/edit",
   function () {
     // show user edit page
   },
@@ -249,7 +250,7 @@ router.on(
     },
     leave: function (params) {
       // when you are going out of the that route
-    }
+    },
   }
 );
 ```
@@ -258,26 +259,26 @@ You may prevent the handler to be resolved in the `before` hook by invoking `don
 
 ```js
 router.on(
-  '/user/edit',
+  "/user/edit",
   function () {
     // show user edit page
   },
   {
     before: function (done, params) {
-      if(!user.loggedIn) {
+      if (!user.loggedIn) {
         done(false);
       } else {
-        done()
+        done();
       }
-    }
+    },
   }
 );
 ```
 
 You may provide hooks in two other cases:
 
-* While specifying a main/root handler `router.on(function() { ... }, hooks)`
-* While specifying a not-found page handler `router.notFound(function() { ... }, hooks)`
+- While specifying a main/root handler `router.on(function() { ... }, hooks)`
+- While specifying a not-found page handler `router.notFound(function() { ... }, hooks)`
 
 #### Generic hooks
 
@@ -291,35 +292,35 @@ router.hooks({
 });
 ```
 
-*Also notice that both hooks receive `params` in case they are attached to a parameterized route.*
+_Also notice that both hooks receive `params` in case they are attached to a parameterized route._
 
 ## API
 
-* `router.on(function)` - adding handler for root/main route
-* `router.on(string, function)` - adding a new route
-* `router.on(object)` - adding a new route
-* `router.off(handler)` - removes the routes associated with the given handler/function
-* `router.navigate(path='', absolute=false)` - if `absolute` is `false` then Navigo finds the root path of your app based on the provided routes.
-* `router.resolve(currentURL=undefined)` - if `currentURL` is provided then the method tries resolving the registered routes to that URL and not `window.location.href`.
-* `router.destroy` - removes all the registered routes and stops the URL change listening.
-* `router.link(path)` - it returns a full url of the given `path`
-* `router.pause(boolean)` - it gives you a chance to change the route without resolving. Make sure that you call `router.pause(false)` so you return to the previous working state.
-* `router.disableIfAPINotAvailable()` - well, it disables the route if History API is not supported
-* `router.updatePageLinks()` - it triggers the `data-navigo` links binding process
-* `router.notFound(function)` - adding a handler for not-found URL (404 page)
-* `router.lastRouteResolved()` - returns an object with the format of `{ url: <string>, query: <string> }` matching the latest resolved route
-* `router.getLinkPath` - you may overwrite that function to provide a different mechanism for fetching paths from links which are currently on the page (with `data-navigo` attribute)
-* `router.historyAPIUpdateMethod` - by default Navigo uses History.pushState and changes that to History.replaceState if the router is `pause`d. If you need to always use `pushState` even if the router is `pause`d use this method like `router.historyAPIUpdateMethod('pushState')` after calling `pause`.
+- `router.on(function)` - adding handler for root/main route
+- `router.on(string, function)` - adding a new route
+- `router.on(object)` - adding a new route
+- `router.off(handler)` - removes the routes associated with the given handler/function
+- `router.navigate(path='', absolute=false)` - if `absolute` is `false` then Navigo finds the root path of your app based on the provided routes.
+- `router.resolve(currentURL=undefined)` - if `currentURL` is provided then the method tries resolving the registered routes to that URL and not `window.location.href`.
+- `router.destroy` - removes all the registered routes and stops the URL change listening.
+- `router.link(path)` - it returns a full url of the given `path`
+- `router.pause(boolean)` - it gives you a chance to change the route without resolving. Make sure that you call `router.pause(false)` so you return to the previous working state.
+- `router.disableIfAPINotAvailable()` - well, it disables the route if History API is not supported
+- `router.updatePageLinks({removeExisting: boolean})` - it triggers the `data-navigo` links binding process
+- `router.notFound(function)` - adding a handler for not-found URL (404 page)
+- `router.lastRouteResolved()` - returns an object with the format of `{ url: <string>, query: <string> }` matching the latest resolved route
+- `router.getLinkPath` - you may overwrite that function to provide a different mechanism for fetching paths from links which are currently on the page (with `data-navigo` attribute)
+- `router.historyAPIUpdateMethod` - by default Navigo uses History.pushState and changes that to History.replaceState if the router is `pause`d. If you need to always use `pushState` even if the router is `pause`d use this method like `router.historyAPIUpdateMethod('pushState')` after calling `pause`.
 
 There are couple of static properties. You'll probably never need to touch them but here're they:
 
 ```js
 Navigo.PARAMETER_REGEXP = /([:*])(\w+)/g;
 Navigo.WILDCARD_REGEXP = /\*/g;
-Navigo.REPLACE_VARIABLE_REGEXP = '([^\/]+)';
-Navigo.REPLACE_WILDCARD = '(?:.*)';
-Navigo.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
-Navigo.MATCH_REGEXP_FLAGS = '';
+Navigo.REPLACE_VARIABLE_REGEXP = "([^/]+)";
+Navigo.REPLACE_WILDCARD = "(?:.*)";
+Navigo.FOLLOWED_BY_SLASH_REGEXP = "(?:/$|$)";
+Navigo.MATCH_REGEXP_FLAGS = "";
 ```
 
 `Navigo.MATCH_REGEXP_FLAGS` could be useful when you want a case insensitive route matching. Simple use `Navigo.MATCH_REGEXP_FLAGS = 'i'`.
@@ -335,8 +336,8 @@ npm test
 
 ## Inspiration
 
-* [A modern JavaScript router in 100 lines](http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url)
+- [A modern JavaScript router in 100 lines](http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url)
 
 ## TODO
 
-* A general handler for when Navigo matches some of the rules
+- A general handler for when Navigo matches some of the rules

@@ -81,7 +81,7 @@ declare class Navigo {
   resolve(path?: string, resolveOptions?: ResolveOptions): false | Match;
   destroy(): void;
   notFound(handler: Function, hooks?: RouteHooks): Navigo;
-  updatePageLinks(): Navigo;
+  updatePageLinks({ removeExisting }: { removeExisting: boolean }): Navigo;
   link(path: string): string;
   generate(name: string, data?: Object, options?: GenerateOptions): string;
   hooks(hooks: RouteHooks): Navigo;

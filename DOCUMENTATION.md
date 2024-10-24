@@ -1,34 +1,34 @@
 # API
 
-| Method                                                              | What it does |
-| --------------------------------------------------------------------| -------------|
-| | |
-| <span style="text-align:center">Frequently used</span> |
-| | |
-| [`constructor`](#initializing)                                      | 
-| [`on`](#adding-a-route)                                             | Registers a route |
-| [`navigate`](#navigating-between-routes)                            | Navigates to a route with a change of the browser URL. You usually are calling this as a result of user interaction. You want to change the URL. |
-| [`resolve`](#resolving-routes)                                      | Navigates to a route but it doesn't change the browser URL. You should fire this at least one in the beginning. |
-| [`notFound`](#handling-a-not-found-page)                            | Defining a not-found handler |
-| | |
-| <span style="text-align:center">Other methods</span> |
-| | |
-| [`navigateByName`](#navigating-by-route-name)                       | Navigate to a route by having its name and supplying URL data args |
-| [`off`](#removing-a-route)                                          | Removes a registered route |
-| [`match`](#direct-matching-of-registered-routes)                    | Checks if the passed path matches some of the routes. It doesn't trigger handlers or hooks. |
-| [`matchLocation`](#direct-matching-of-paths)                        | The bare matching logic of Navigo |
-| [`destroy`](#destroying-the-router)                                 | Removing the currently registered routes |
-| [`updatePageLinks`](#augment-your-a-tags)                           | Call this if you re-render (change the DOM) and want Navigo to recognize the links with `data-navigo` attribute |
-| [`link`](#generating-paths)                                         | Constructs a path |
-| [`generate`](#generating-paths)                                     | Constructs a path based on a registered route |
-| [`lastResolved`](#resolving-routes)                                 | Returns the last resolved route/s |
-| [`hooks`](#defining-hooks-for-all-the-routes)                       | Define all-routes hooks |
-| [`addBeforeHook`](#adding-a-hook-to-already-defined-route)          | Adding before hook on an already created route |
-| [`addAfterHook`](#adding-a-hook-to-already-defined-route)           | Adding after hook on an already created route |
-| [`addAlreadyHook`](#adding-a-hook-to-already-defined-route)         | Adding already hook on an already created route |
-| [`addLeaveHook`](#adding-a-hook-to-already-defined-route)           | Adding leave hook on an already created route |
-| [`getCurrentLocation`](#getting-current-location-of-the-browser)    | Returns a [Match](#match) object for the current browser location |
-| [`getRoute`](#getting-access-to-a-route)                            | Get a [Route](#route) by name/path |
+| Method                                                           | What it does                                                                                                                                     |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+|                                                                  |                                                                                                                                                  |
+| <span style="text-align:center">Frequently used</span>           |
+|                                                                  |                                                                                                                                                  |
+| [`constructor`](#initializing)                                   |
+| [`on`](#adding-a-route)                                          | Registers a route                                                                                                                                |
+| [`navigate`](#navigating-between-routes)                         | Navigates to a route with a change of the browser URL. You usually are calling this as a result of user interaction. You want to change the URL. |
+| [`resolve`](#resolving-routes)                                   | Navigates to a route but it doesn't change the browser URL. You should fire this at least one in the beginning.                                  |
+| [`notFound`](#handling-a-not-found-page)                         | Defining a not-found handler                                                                                                                     |
+|                                                                  |                                                                                                                                                  |
+| <span style="text-align:center">Other methods</span>             |
+|                                                                  |                                                                                                                                                  |
+| [`navigateByName`](#navigating-by-route-name)                    | Navigate to a route by having its name and supplying URL data args                                                                               |
+| [`off`](#removing-a-route)                                       | Removes a registered route                                                                                                                       |
+| [`match`](#direct-matching-of-registered-routes)                 | Checks if the passed path matches some of the routes. It doesn't trigger handlers or hooks.                                                      |
+| [`matchLocation`](#direct-matching-of-paths)                     | The bare matching logic of Navigo                                                                                                                |
+| [`destroy`](#destroying-the-router)                              | Removing the currently registered routes                                                                                                         |
+| [`updatePageLinks`](#augment-your-a-tags)                        | Call this if you re-render (change the DOM) and want Navigo to recognize the links with `data-navigo` attribute                                  |
+| [`link`](#generating-paths)                                      | Constructs a path                                                                                                                                |
+| [`generate`](#generating-paths)                                  | Constructs a path based on a registered route                                                                                                    |
+| [`lastResolved`](#resolving-routes)                              | Returns the last resolved route/s                                                                                                                |
+| [`hooks`](#defining-hooks-for-all-the-routes)                    | Define all-routes hooks                                                                                                                          |
+| [`addBeforeHook`](#adding-a-hook-to-already-defined-route)       | Adding before hook on an already created route                                                                                                   |
+| [`addAfterHook`](#adding-a-hook-to-already-defined-route)        | Adding after hook on an already created route                                                                                                    |
+| [`addAlreadyHook`](#adding-a-hook-to-already-defined-route)      | Adding already hook on an already created route                                                                                                  |
+| [`addLeaveHook`](#adding-a-hook-to-already-defined-route)        | Adding leave hook on an already created route                                                                                                    |
+| [`getCurrentLocation`](#getting-current-location-of-the-browser) | Returns a [Match](#match) object for the current browser location                                                                                |
+| [`getRoute`](#getting-access-to-a-route)                         | Get a [Route](#route) by name/path                                                                                                               |
 
 # Topics
 
@@ -76,28 +76,28 @@
 
 Types
 
-| Object                               |
-| -------------------------------------|
-| [Navigo](#navigo)                    |
-| [Match](#match)                      |
-| [Route](#route)                      |
-| [RouteHooks](#routehooks)            |
-| [RouterOptions](#routeroptions)  |
-| [NavigateOptions](#navigateoptions)  |
-| [ResolveOptions](#resolve-options)   |
+| Object                              |
+| ----------------------------------- |
+| [Navigo](#navigo)                   |
+| [Match](#match)                     |
+| [Route](#route)                     |
+| [RouteHooks](#routehooks)           |
+| [RouterOptions](#routeroptions)     |
+| [NavigateOptions](#navigateoptions) |
+| [ResolveOptions](#resolve-options)  |
 
 ## Initializing
 
 Navigo constructor has one mandatory argument - the root path of your application. For example, if you are hosting the application at `https://site.com/my/project` you have to specify the following:
 
 ```js
-const router = new Navigo('/my/project');
+const router = new Navigo("/my/project");
 ```
 
 The second argument is the default [router options](#routeroptions). The `strategy` field there defines how many matches the router finds - one or many.
 
 ```js
-const router = new Navigo('/my/project', { strategy: 'ALL' });
+const router = new Navigo("/my/project", { strategy: "ALL" });
 ```
 
 By default the strategy is equal to `"ONE"`. Meaning that when a match is found the router stops resolving other routes.
@@ -117,8 +117,8 @@ interface Navigo {
 To add a route use the `on` method. It can be used in four different ways. The first and the most straightforward one is when you have a path and want to map it to a function.
 
 ```js
-const router = new Navigo('/');
-router.on('/foo/bar', () => {
+const router = new Navigo("/");
+router.on("/foo/bar", () => {
   // Fired if the page URL matches '/foo/bar'.
 });
 ```
@@ -126,7 +126,7 @@ router.on('/foo/bar', () => {
 The path in this case could be also a regular expression. For example:
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 router.on(/foo\/(.*)/, () => {
   // Fired if the page URL matches '/foo/bar'.
 });
@@ -135,11 +135,11 @@ router.on(/foo\/(.*)/, () => {
 If you skip the path you are basically defining a handler for your root.
 
 ```js
-const router = new Navigo('/my/app');
+const router = new Navigo("/my/app");
 router.on(() => {
   // Fired if the page URL matches '/my/app' route.
   // Or in other words the home of your app.
-})
+});
 ```
 
 The `on` method is chainable so you can call `on('...', () => {}).on('...', () => {})` if you want.
@@ -148,12 +148,12 @@ The next option is to define a key-value pairs of your routes:
 
 ```js
 router.on({
-  '/foo/bar': () => {
+  "/foo/bar": () => {
     // Fired if the route matches '/foo/bar'.
   },
-  '/foo/zar': () => {
+  "/foo/zar": () => {
     // Fired if the route matches '/foo/zar'.
-  }
+  },
 });
 ```
 
@@ -183,13 +183,13 @@ Notice the typing of the `on` method in the beginning of this section and you'll
 The parameterized routes have paths that contain dynamic parts. For example:
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 
-router.on('/user/:id/:action', ({ data }) => {
+router.on("/user/:id/:action", ({ data }) => {
   console.log(data); // { id: 'xxx', action: 'save' }
 });
 
-router.resolve('/user/xxx/save');
+router.resolve("/user/xxx/save");
 ```
 
 `"/user/xxx/save"` matches the defined route. `"xxx"` maps to `id` and `"save"` to `action`. The data from the URL comes into the `data` field of the [Match](#match) object passed to your handler.
@@ -197,7 +197,7 @@ router.resolve('/user/xxx/save');
 Parameterized routes happen also when we use a regular expression as a path. It's just our `data` property comes as an array containing the matched groups.
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 router.on(/rock\/(.*)\/(.*)/, ({ data }) => {
   console.log(data); // ["paper", "scissors"]
 });
@@ -209,15 +209,15 @@ router.resolve("/rock/paper/scissors");
 Navigo captures the GET params of the matched routes. For example:
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 
-router.on('/user/:id/:action', ({ data, params, queryString }) => {
+router.on("/user/:id/:action", ({ data, params, queryString }) => {
   console.log(data); // { id: 'xxx', action: 'save' }
   console.log(params); // { m: "n", k: "z" }
   console.log(queryString); // "m=n&k=z"
 });
 
-router.resolve('/user/xxx/save?m=n&k=z');
+router.resolve("/user/xxx/save?m=n&k=z");
 ```
 
 ### Reading hash params
@@ -225,13 +225,13 @@ router.resolve('/user/xxx/save?m=n&k=z');
 Navigo captures the hash bit of the URL for the matched routes. For example:
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 
-router.on('/foobar', ({ hashString }) => {
+router.on("/foobar", ({ hashString }) => {
   console.log(hashString); // something-else
 });
 
-router.resolve('/foobar#something-else');
+router.resolve("/foobar#something-else");
 ```
 
 ### Matching logic
@@ -239,25 +239,25 @@ router.resolve('/foobar#something-else');
 Navigo relies on regular expressions to match strings against location paths. This logic is abstracted and for the final user we have a simple [DSL](https://en.wikipedia.org/wiki/Domain-specific_language). Here are couple of examples:
 
 ```js
-router.on('/foo', () => {});
+router.on("/foo", () => {});
 // matches specifically "/foo"
 
-router.on('/foo/:name', () => {});
+router.on("/foo/:name", () => {});
 // matches "/foo/my-name-here"
 
-router.on(':page', () => {});
+router.on(":page", () => {});
 // matches "/about-page"
 
-router.on('/foo/*', () => {});
+router.on("/foo/*", () => {});
 // matches "/foo/a/b/c"
 
-router.on('*', () => {});
+router.on("*", () => {});
 // matches "/foo/bar/moo"
 
 router.on(/rock\/(.*)\/(.*)/, () => {});
 // matches "/rock/paper/scissors"
 
-router.on('/foo/:id/?', () => {});
+router.on("/foo/:id/?", () => {});
 // matches "/foo/20/save" and also "/foo/20"
 ```
 
@@ -294,10 +294,10 @@ type NavigateOptions = {
 
 The `navigate` method by default:
 
-* Checks if there is a match. And if the answer is "yes" then ...
-* It calls hooks (if any) and your route handler.
-* Updates the internal state of the router.
-* Updates the browser URL.
+- Checks if there is a match. And if the answer is "yes" then ...
+- It calls hooks (if any) and your route handler.
+- Updates the internal state of the router.
+- Updates the browser URL.
 
 Consider the following example:
 
@@ -306,10 +306,10 @@ const router = new Navigo("/");
 
 router
   .on("/foo/bar", () => {
-    console.log('Nope');
+    console.log("Nope");
   })
   .on("/about", () => {
-    console.log('This is About page');
+    console.log("This is About page");
   });
 
 router.navigate("about");
@@ -319,21 +319,25 @@ After the last line the browser will have in its address bar `/about` as a path 
 
 `navigate` accepts a few options:
 
-* `title` is a string that gets passed to `pushState` (or `replaceState`).
-* `stateObj` is a state object that gets passed to `pushState` (or `replaceState`).
-* If you don't want to have a new entry in the history you should pass `{ historyAPIMethod: 'replaceState' }`. By default is `pushState`.
-* If `updateBrowserURL` is set to `false` the library will not use the history API at all. Meaning, the browser URL will not change.
-* If `callHandler` is set to `false` your route handler will not be fired.
-* If `callHooks` is set to `false` your route hooks will be skipped.
-* If `updateState` is set to `false` the router will not update its internal state. This means that the `lastResolved()`/`current` route will not be updated.
-* If `force` is set to `true` the router will update its internal state only. This makes the router like it already resolved specific URL.
-* `resolveOptions` are the same options used in the [resolve](#resolving-routes) method.
+- `title` is a string that gets passed to `pushState` (or `replaceState`).
+- `stateObj` is a state object that gets passed to `pushState` (or `replaceState`).
+- If you don't want to have a new entry in the history you should pass `{ historyAPIMethod: 'replaceState' }`. By default is `pushState`.
+- If `updateBrowserURL` is set to `false` the library will not use the history API at all. Meaning, the browser URL will not change.
+- If `callHandler` is set to `false` your route handler will not be fired.
+- If `callHooks` is set to `false` your route hooks will be skipped.
+- If `updateState` is set to `false` the router will not update its internal state. This means that the `lastResolved()`/`current` route will not be updated.
+- If `force` is set to `true` the router will update its internal state only. This makes the router like it already resolved specific URL.
+- `resolveOptions` are the same options used in the [resolve](#resolving-routes) method.
 
 ### Navigating by route name
 
 ```typescript
 interface Navigo {
-  navigateByName(name: string, data?:Object, options?: NavigateOptions): boolean;
+  navigateByName(
+    name: string,
+    data?: Object,
+    options?: NavigateOptions
+  ): boolean;
 }
 ```
 
@@ -341,11 +345,11 @@ Very often we have complex URLs and we want to have a quick way to reach them. `
 
 ```js
 route.on({
-  "/users/:name": { 
+  "/users/:name": {
     as: "user",
     uses: (match) => {
       console.log(match.data.name); // Krasimir
-    }
+    },
   },
 });
 
@@ -368,7 +372,7 @@ When Navigo is initialized checks the page for such tags and attaches `click` ha
 
 Navigo has a method called `updatePageLinks` which you have to call every time when you change the DOM and you expect to see new links on the page. Because Navigo is not wired to a rendering engine doesn't really know about the DOM manipulations. It does though makes an assumption - after each of your route handlers there is a `updatePageLinks` call. The router expects that after the successful route resolving the DOM is updated and calls that function again. Feel free to fire `updatePageLinks` multiple times on the same DOM tree. There will be just one `click` handler attached to your links.
 
-*Links with `target="_blank"` are ignored even if they have `data-navigo` attribute.*
+_Links with `target="_blank"` are ignored even if they have `data-navigo` attribute._
 
 ### `data-navigo` with value
 
@@ -376,7 +380,7 @@ If you use `data-navigo="false"` the link will be ignored by Navigo and if there
 
 ### Custom selector
 
-If you are not happy with  `data-navigo` attribute you may provide your own CSS selector. You may even say "just augment all the links on the page".
+If you are not happy with `data-navigo` attribute you may provide your own CSS selector. You may even say "just augment all the links on the page".
 
 ```js
 const router = new Navigo("/", { linksSelector: "a" });
@@ -389,7 +393,12 @@ Example [here](./examples/custom-selector/page.html).
 As we learned above, when a link with `data-navigo` attribute is clicked the `navigate` method of the router gets executed. That same method accepts options and if you want to pass some of them use the following syntax:
 
 ```html
-<a href="/foo/bar" data-navigo data-navigo-options="updateBrowserURL:false, callHandler: false, updateState: false, force: false, historyAPIMethod: replaceState, resolveOptionsStrategy: ALL, resolveOptionsHash: true">my link</a>
+<a
+  href="/foo/bar"
+  data-navigo
+  data-navigo-options="updateBrowserURL:false, callHandler: false, updateState: false, force: false, historyAPIMethod: replaceState, resolveOptionsStrategy: ALL, resolveOptionsHash: true"
+  >my link</a
+>
 ```
 
 Which will result in the following options:
@@ -433,8 +442,8 @@ type Route = {
 
 By default Navigo is not resolving your routes. You have to at least once call `resolve` method. The `path` argument is not mandatory. If you skip it the library will use the current URL of the page. The method is fired automatically in the following cases:
 
-* If there is a `popstate` event dispatched (this happens when the user manually changes the browser location by hitting for example the back button)
-* If the `navigate` method is called and `shouldResolve` is not set to `false`
+- If there is a `popstate` event dispatched (this happens when the user manually changes the browser location by hitting for example the back button)
+- If the `navigate` method is called and `shouldResolve` is not set to `false`
 
 By default the `resolve` function catches the first match and stops searching. You can amend this behavior by passing `"ALL"` as a value of the `strategy` field. However, if there is a matching route you'll get an array of object (or objects) of type [Match](#match). If there is no match then `resolve` returns `false`. When your route gets resolved its handler is called. It receives a [Match](#match) object. From that object you can pull the data passed through the URL (if you used a parameterized path) or the GET params set in the URL.
 
@@ -442,9 +451,9 @@ If you need to see the latest match (or matches) you can access it via the `last
 
 `resolve` does the following:
 
-* Checks if there is a match. And if the answer is "yes" then ...
-* It calls hooks (if any) and your route handler.
-* Updates the internal state of the router.
+- Checks if there is a match. And if the answer is "yes" then ...
+- It calls hooks (if any) and your route handler.
+- Updates the internal state of the router.
 
 Another option available is `noMatchWarning`. Which if you set to `true` will prevent the router of warning a message if there is no matching route.
 
@@ -458,16 +467,16 @@ export type ResolveOptions = {
 };
 ```
 
-* `strategy` - either `"ONE"` (by default) or `"ALL"`.
-* `hash` - whether to use hash based routing or not (by default is `false`).
-* `noMatchWarning` - `false` (by default) or `true`
+- `strategy` - either `"ONE"` (by default) or `"ALL"`.
+- `hash` - whether to use hash based routing or not (by default is `false`).
+- `noMatchWarning` - `false` (by default) or `true`
 
 ### Hash based routing
 
 Navigo supports hash based routing. Which means that it uses the hash string as path for routing. For example `/my/app/#/about/team` is treated as `/about/team`. To enable this mode you have to pass `hash: true` when creating the router.
 
 ```js
-const router = new Navigo('/', { hash: true });
+const router = new Navigo("/", { hash: true });
 ```
 
 ## Direct matching of registered routes
@@ -510,7 +519,7 @@ There is a `matchLocation` method that offers the bare matching logic of the rou
 
 ```js
 // let's say that the path of the browser is "/foo/bar?a=b"
-router.matchLocation('/foo/:id');
+router.matchLocation("/foo/:id");
 /*
 {
   data: {
@@ -551,10 +560,10 @@ type RouteHooks = {
 };
 ```
 
-* The `before` hook receives two arguments. The first one is a function that needs to be called with either no arguments or `false`. The no-argument version means "move forward". `false` stops the resolving and your handler will not be called.
-* `after` is called after your handler
-* `leave` is called when you are about to leave out of the route. Similarly to the `before` hook accepts a function as first argument and a [Match](#match) object (or an array of [Match](#match) objects) as second. If the function is called with `false` Navigo will stop resolving the new matched route meaning "we cant' go out of the current route".
-* `already` is called when this is the current route and it matches again
+- The `before` hook receives two arguments. The first one is a function that needs to be called with either no arguments or `false`. The no-argument version means "move forward". `false` stops the resolving and your handler will not be called.
+- `after` is called after your handler
+- `leave` is called when you are about to leave out of the route. Similarly to the `before` hook accepts a function as first argument and a [Match](#match) object (or an array of [Match](#match) objects) as second. If the function is called with `false` Navigo will stop resolving the new matched route meaning "we cant' go out of the current route".
+- `already` is called when this is the current route and it matches again
 
 ### Defining hooks for specific route
 
@@ -610,7 +619,7 @@ router.hooks({
   before(done, match) {
     // do something
     done();
-  }
+  },
 });
 router.on("/foo/bar", () => {});
 router.on("/", () => {});
@@ -624,9 +633,9 @@ Sometimes you may need to add a hook to a route later. In such cases use the fol
 const router = new Navigo("/");
 
 router.on("/foo/bar", () => {});
-const cleanup = router.addBeforeHook('foo/bar', (done) => {
+const cleanup = router.addBeforeHook("foo/bar", (done) => {
   // my before hook logic
-})
+});
 
 // ... some other logic
 cleanup();
@@ -647,9 +656,9 @@ If you no longer need Navigo working just call `router.destroy()`. This will flu
 There are two methods `link` and `generate` that you can use to create string paths. For example:
 
 ```js
-const router = new Navigo('/my/app');
+const router = new Navigo("/my/app");
 
-router.link('blah'); // "/my/app/blah
+router.link("blah"); // "/my/app/blah
 
 router.on({
   "/user/:id/:action": { as: "RouteNameHere", uses: () => {} },
@@ -671,7 +680,7 @@ interface Navigo {
 Navigo offers a special handler for the cases where a no match is found.
 
 ```js
-const router = new Navigo('/');
+const router = new Navigo("/");
 
 router.notFound(() => {
   // this runs if there is no match found
@@ -706,14 +715,18 @@ class Navigo {
   resolve(path?: string, resolveOptions?: ResolveOptions): false | Match;
   destroy(): void;
   notFound(handler: Function, hooks?: RouteHooks): Navigo;
-  updatePageLinks(): Navigo;
+  updatePageLinks({ removeExisting: boolean }): Navigo;
   link(path: string): string;
   lastResolved(): null | Match[];
-  generate(name: string, data?: Object, options:? GenerateOptions): string;
+  generate(name: string, data?: Object, options: ?GenerateOptions): string;
   hooks(hooks: RouteHooks): Navigo;
   getLinkPath(link: Object): string;
   match(path: string): false | Match[];
-  matchLocation(path: string, currentLocation?: string, annotatePathWithRoot?: boolean): false | Match;
+  matchLocation(
+    path: string,
+    currentLocation?: string,
+    annotatePathWithRoot?: boolean
+  ): false | Match;
   getCurrentLocation(): Match;
   addBeforeHook(route: Route | string, hookFunction: Function): Function;
   addAfterHook(route: Route | string, hookFunction: Function): Function;

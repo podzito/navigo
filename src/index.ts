@@ -1,37 +1,36 @@
-import {
-  Match,
-  Route,
-  RouteHooks,
-  QContext,
-  NavigateOptions,
-  ResolveOptions,
+import NavigoRouter, {
   GenerateOptions,
   Handler,
+  Match,
+  NavigateOptions,
+  QContext,
+  ResolveOptions,
+  Route,
+  RouteHooks,
   RouterOptions,
 } from "../index";
-import NavigoRouter from "../index";
-import {
-  pushStateAvailable,
-  matchRoute,
-  parseQuery,
-  extractGETParameters,
-  isFunction,
-  isString,
-  clean,
-  parseNavigateOptions,
-  windowAvailable,
-  getCurrentEnvURL,
-  accumulateHooks,
-  extractHashFromURL,
-} from "./utils";
 import Q from "./Q";
-import setLocationPath from "./middlewares/setLocationPath";
-import matchPathToRegisteredRoutes from "./middlewares/matchPathToRegisteredRoutes";
 import checkForDeprecationMethods from "./middlewares/checkForDeprecationMethods";
 import checkForForceOp from "./middlewares/checkForForceOp";
-import updateBrowserURL from "./middlewares/updateBrowserURL";
+import matchPathToRegisteredRoutes from "./middlewares/matchPathToRegisteredRoutes";
 import processMatches from "./middlewares/processMatches";
+import setLocationPath from "./middlewares/setLocationPath";
+import updateBrowserURL from "./middlewares/updateBrowserURL";
 import waitingList from "./middlewares/waitingList";
+import {
+  accumulateHooks,
+  clean,
+  extractGETParameters,
+  extractHashFromURL,
+  getCurrentEnvURL,
+  isFunction,
+  isString,
+  matchRoute,
+  parseNavigateOptions,
+  parseQuery,
+  pushStateAvailable,
+  windowAvailable,
+} from "./utils";
 
 import { notFoundLifeCycle } from "./lifecycles";
 
@@ -233,14 +232,14 @@ export default function Navigo(appRoute?: string, options?: RouterOptions) {
     );
     return this;
   }
-  function updatePageLinks() {
+  function updatePageLinks({ removeExisting }: { removeExisting: boolean }) {
     if (!isWindowAvailable) return;
     findLinks().forEach((link) => {
       if (
         "false" === link.getAttribute("data-navigo") ||
         "_blank" === link.getAttribute("target")
       ) {
-        if (link.hasListenerAttached) {
+        if (link.hasListenerAttached && removeExisting) {
           link.removeEventListener("click", link.navigoHandler);
         }
         return;

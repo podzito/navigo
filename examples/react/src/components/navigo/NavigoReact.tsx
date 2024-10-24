@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
 import Navigo, { Match } from "navigo";
+import { useEffect, useRef, useState } from "react";
 
 let router: Navigo;
 
@@ -32,7 +32,7 @@ export function useRoute(path: string): [false | Match] {
           done();
         }
       })
-      .updatePageLinks();
+      .updatePageLinks({removeExisting: false});
     setTimeout(() => getRouter().resolve(), 0);
     return () => {
       getRouter().off(handler.current);

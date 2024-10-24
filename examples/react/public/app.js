@@ -38032,7 +38032,7 @@ function useRoute(path) {
                 done();
             }
         })
-            .updatePageLinks();
+            .updatePageLinks({removeExisting: false});
         setTimeout(() => getRouter().resolve(), 0);
         return () => {
             getRouter().off(handler.current);
