@@ -456,5 +456,5 @@ export default function Navigo(appRoute?: string, options?: RouterOptions) {
   this._setCurrent = (c) => (current = self.current = c);
 
   listen.call(this);
-  updatePageLinks.call(this);
+  updatePageLinks.call(this, { removeExisting: false });
 }
